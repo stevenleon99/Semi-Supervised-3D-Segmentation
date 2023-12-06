@@ -311,51 +311,51 @@ def main():
                         )
         
     ############# test all epoch check points ###############
-    startEpoch = 1700
-    interval = 50
-    numEpoch = 6
-    for i in range(1, numEpoch, 1):
-        args.resume = f'saved_check_point/swinunetr_0.3fs_rot/20231121/epoch_{startEpoch + i * interval}.pth'
+    # startEpoch = 1700
+    # interval = 50
+    # numEpoch = 6
+    # for i in range(1, numEpoch, 1):
+    #     args.resume = f'saved_check_point/swinunetr_0.3fs_rot/20231121/epoch_{startEpoch + i * interval}.pth'
          
-        ############# Load pre-trained weights ###############
-        if args.pretrain != 'None':
-                print("pretrain weights >>>>>", args.pretrain)
-                store_dict = model.state_dict()
-                try:
-                    model_dict = torch.load(args.pretrain)["state_dict"]
-                except:
-                    model_dict = torch.load(args.pretrain)["net"]
-                    model_dict_ = {}
-                    for k,v in model_dict.items():
-                        model_dict_[k.replace('module.','')] = v
-                    model_dict = model_dict_
-                for key in model_dict.keys():
-                    if 'out' not in key:
-                        store_dict[key] = model_dict[key]
-                model.load_state_dict(store_dict) # seems the model_dict (pretrained) are not loaded ??
-                print('Use pretrained weights')
-        
-        if args.resume != 'None':
-            print("check point pretrain weights >>>>>", args.resume)
+    ############# Load pre-trained weights ###############
+    if args.pretrain != 'None':
+            print("pretrain weights >>>>>", args.pretrain)
             store_dict = model.state_dict()
-            model_dict = torch.load(args.resume)["net"]
+            try:
+                model_dict = torch.load(args.pretrain)["state_dict"]
+            except:
+                model_dict = torch.load(args.pretrain)["net"]
+                model_dict_ = {}
+                for k,v in model_dict.items():
+                    model_dict_[k.replace('module.','')] = v
+                model_dict = model_dict_
+            for key in model_dict.keys():
+                if 'out' not in key:
+                    store_dict[key] = model_dict[key]
+            model.load_state_dict(store_dict) # seems the model_dict (pretrained) are not loaded ??
+            print('Use pretrained weights')
+    
+    if args.resume != 'None':
+        print("check point pretrain weights >>>>>", args.resume)
+        store_dict = model.state_dict()
+        model_dict = torch.load(args.resume)["net"]
 
-            for k,v in model_dict.items():
-                if 'out' not in k:
-                    k = k.replace('module.', '') if 'module' in k else k
-                    store_dict[k] = v
+        for k,v in model_dict.items():
+            if 'out' not in k:
+                k = k.replace('module.', '') if 'module' in k else k
+                store_dict[k] = v
 
-            model.load_state_dict(store_dict)
-            print('Use check point pretrained weights')
-        #########################################################
-        
-        model.cuda()
+        model.load_state_dict(store_dict)
+        print('Use check point pretrained weights')
+    #########################################################
+    
+    model.cuda()
 
-        torch.backends.cudnn.benchmark = True
-        
-        test_loader, val_transforms = get_validation_loader(args)
-        
-        validation(model, test_loader, val_transforms, args)
+    torch.backends.cudnn.benchmark = True
+    
+    test_loader, val_transforms = get_validation_loader(args)
+    
+    validation(model, test_loader, val_transforms, args)
 
 
 if __name__ == "__main__":
