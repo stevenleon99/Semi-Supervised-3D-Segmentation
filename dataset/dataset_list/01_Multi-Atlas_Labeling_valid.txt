@@ -1,0 +1,1 @@
+01_Multi-Atlas_Labeling/img/img0061.nii.gz	01_Multi-Atlas_Labeling/label/label0061.nii.gz
