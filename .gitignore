@@ -1,0 +1,15 @@
+# data
+logs/
+output/
+data/
+pretrained_weights/swin_unetr.small_5000ep_f24_lr2e-4_pretrained.pt
+pretrained_weights/Genesis_Chest_CT.pt
+saved_check_point/
+
+#__pycache__
+*/__pycache__
+*.pyc
+
+#check point
+*.pth
+*.pt
