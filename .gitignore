@@ -1,7 +1,8 @@
 # data
 logs/
 output/
-data/PublicAbdominalData
+data/PublicAbdominalData/01_Multi-Atlas_Labeling/img
+data/PublicAbdominalData/01_Multi-Atlas_Labeling/label
 pretrained_weights/swin_unetr.small_5000ep_f24_lr2e-4_pretrained.pt
 pretrained_weights/Genesis_Chest_CT.pt
 saved_check_point/
